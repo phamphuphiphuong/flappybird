@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/sprites/pipe-green.png" type="Texture" id=1]
+[ext_resource path="res://scripts/pipe.gd" type="Script" id=2]
+[ext_resource path="res://assets/audios/point.ogg" type="AudioStream" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24, 160 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 64 )
+
+[node name="pipe" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="pipe-up" type="Area2D" parent="." groups=[
+"fail",
+]]
+position = Vector2( 312, 480 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="sprite" type="Sprite" parent="pipe-up"]
+texture = ExtResource( 1 )
+
+[node name="collision" type="CollisionShape2D" parent="pipe-up"]
+shape = SubResource( 1 )
+
+[node name="pipe-down" type="Area2D" parent="." groups=[
+"fail",
+]]
+position = Vector2( 312, 32 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="sprite" type="Sprite" parent="pipe-down"]
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+
+[node name="collision" type="CollisionShape2D" parent="pipe-down"]
+shape = SubResource( 1 )
+
+[node name="pass" type="Area2D" parent="." groups=[
+"pass",
+]]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="collision" type="CollisionShape2D" parent="pass"]
+position = Vector2( 328, 256 )
+shape = SubResource( 2 )
+
+[node name="point" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+[connection signal="body_entered" from="pass" to="." method="_on_pass_body_entered"]
